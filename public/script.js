@@ -1,8 +1,8 @@
-// let draw = $('.draw');
-// let listA = $('.grpA .grpList');
-// let listB = $('.grpB .grpList');
-// let listC = $('.grpC .grpList');
-// let listD = $('.grpD .grpList');
+let draw = $('.draw');
+let listA = $('.grpA .grpList');
+let listB = $('.grpB .grpList');
+let listC = $('.grpC .grpList');
+let listD = $('.grpD .grpList');
 
 let NA = ['Sentinels', '100 Thieves', 'Envy'];
 let EMEA = ['Gambit Esports', 'SuperMassive Blaze', 'Acend', 'G2 Esports'];
@@ -12,12 +12,15 @@ let SEA = ['Bren Esports', 'Paper Rex'];
 let LATAM = ['KRÜ Esports'];
 let JP = ['ZETA DIVISION', 'Crazy Raccoon'];
 
-let pool1 = [{r:'NA',p:0,s:false}, {r:'EMEA',p:0,s:false}, {r:'KR',p:0,s:false}, {r:'BR',p:0,s:false}];
-let pool2 = [{r:'NA',p:1,s:false}, {r:'EMEA',p:1,s:false}, {r:'LATAM',p:0,s:false}, {r:'SEA',p:0,s:false}];
-let pool3 = [{r:'JP',p:0,s:false}, {r:'BR',p:1,s:false}, {r:'KR',p:1,s:false}, {r:'EMEA',p:2,s:false}];
-let pool4 = [{r:'NA',p:2,s:false}, {r:'SEA',p:1,s:false}, {r:'JP',p:1,s:false}, {r:'EMEA',p:3,s:false}];
+var pool1,pool2,pool3,pool4;
+var g1,g2,g3,g4;
 
-// console.log(pool1);
+function makePools() {
+    pool1 = [{r:'NA',p:0,s:false}, {r:'EMEA',p:0,s:false}, {r:'KR',p:0,s:false}, {r:'BR',p:0,s:false}];
+    pool2 = [{r:'NA',p:1,s:false}, {r:'EMEA',p:1,s:false}, {r:'LATAM',p:0,s:false}, {r:'SEA',p:0,s:false}];
+    pool3 = [{r:'JP',p:0,s:false}, {r:'BR',p:1,s:false}, {r:'KR',p:1,s:false}, {r:'EMEA',p:2,s:false}];
+    pool4 = [{r:'NA',p:2,s:false}, {r:'SEA',p:1,s:false}, {r:'JP',p:1,s:false}, {r:'EMEA',p:3,s:false}];
+}
 
 function getReg(reg) {
     switch (reg) {
@@ -39,7 +42,9 @@ function getRandVal(size) {
 function getTeam(pool,regCnt) {
     
     var team = {};
+    var itr=0;
     do {
+        itr++;
         if(team)
         {
             regCnt[team.r]--;
@@ -49,7 +54,12 @@ function getTeam(pool,regCnt) {
         team.name = getReg(team.r)[pool[idx].p];
         regCnt[team.r]++;
     }
-    while(isItNotOk(regCnt));
+    while(isItNotOk(regCnt) && itr<=pool.length);
+
+    if(itr>pool.length)
+    {
+        return;
+    }
 
     pool.splice(idx,1);
 
@@ -83,19 +93,41 @@ function randGrps() {
     t3=getTeam(pool3,regCnt);
     t4=getTeam(pool4,regCnt);
 
+    if(t1 == null || t2 == null || t3 == null || t4 == null)
+    {
+        return;
+    }
     
     group.push(t1.name,t2.name,t3.name,t4.name);
-    console.log(group);
-    // console.log(regCnt);
 
     return group;
 }
 
 function getGrps() {
-    let g1=randGrps();
-    let g2=randGrps();
-    let g3=randGrps();
-    let g4=randGrps();
+    makePools();
+    g1=randGrps();
+    g2=randGrps();
+    g3=randGrps();
+    g4=randGrps();
+
+    if(g1 == null || g2 == null || g3 == null || g4 == null)
+    {
+        getGrps();
+    }
 }
 
-getGrps();
+function addToList(group, list)
+{
+    list.empty();
+    group.forEach((element) => {
+        list.append($('<li>', {text: element}));
+    });
+}
+
+draw.click(() => {
+    getGrps();
+    addToList(g1,listA);
+    addToList(g2,listB);
+    addToList(g3,listC);
+    addToList(g4,listD);
+})
