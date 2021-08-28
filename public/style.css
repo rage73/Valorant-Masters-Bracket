@@ -1,0 +1,11 @@
+.groups {
+    display:flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+}
+
+.draw{
+    text-align: center;
+    margin: 0 45%;
+    font-size: 15pt;
+}
