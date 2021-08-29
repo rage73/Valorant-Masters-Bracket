@@ -1,8 +1,8 @@
 let draw = $('.draw');
-let listA = $('.grpA .grpList');
-let listB = $('.grpB .grpList');
-let listC = $('.grpC .grpList');
-let listD = $('.grpD .grpList');
+let listA = $('#grpA .grpList');
+let listB = $('#grpB .grpList');
+let listC = $('#grpC .grpList');
+let listD = $('#grpD .grpList');
 
 let NA = ['Sentinels', '100 Thieves', 'Envy'];
 let EMEA = ['Gambit Esports', 'SuperMassive Blaze', 'Acend', 'G2 Esports'];
