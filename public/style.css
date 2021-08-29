@@ -67,8 +67,8 @@ div {
 .draw {
     text-align: center;
     font-size: 15pt;
-    /* height: 100%; */
     padding: 5px;
+    font-family: Charter,arial,georgia,sans-serif;
 }
 
 
