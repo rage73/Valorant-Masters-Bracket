@@ -106,7 +106,17 @@ footer {
     font-size: 12pt;
 }
 
-footer i{
+footer i {
     color: #7e7e7e;
     font-size: 12pt;
+}
+
+@media (max-width: 650px) {
+    .grp {
+        width: 50%;
+        margin: 10px 0;
+    }
+    .grp ul {
+        text-align: center;
+    }
 }
